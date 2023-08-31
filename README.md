@@ -1,8 +1,8 @@
-# R3F Template
+# Monitor Portals
 
-A basic NextJS template, set up with r3f, drei, three, Tailwind and Typescript.
+Made with R3F
 
-Happy 3D coding!
+[Code sandbox](https://codesandbox.io/p/sandbox/github/JakePitman/monitor-portals)
 
 ## Getting Started
 
