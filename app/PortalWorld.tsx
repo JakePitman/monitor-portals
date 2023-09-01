@@ -1,13 +1,15 @@
 import { useEffect, useRef } from "react";
 import {
   MeshPortalMaterial,
+  PortalMaterialType,
   useTexture,
   Text3D,
   Center,
   Float,
 } from "@react-three/drei";
-import { useThree } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
+import { easing } from "maath";
 
 import { Active } from "./Experience";
 
@@ -28,22 +30,30 @@ export const PortalWorld = ({
 }: Props) => {
   const map = useTexture(mapPath);
   const isActive = name === active;
-  const ref = useRef<THREE.Mesh>(null);
-  const { camera } = useThree();
+  const meshRef = useRef<THREE.Mesh>(null);
+  const portalRef = useRef<PortalMaterialType>(null);
+  const camera = useThree((state) => state.camera);
 
   useEffect(() => {
-    ref.current?.lookAt(camera.position);
+    meshRef.current?.lookAt(camera.position);
   }, []);
+
+  useFrame((_state, delta) => {
+    const worldOpen = isActive;
+    portalRef.current &&
+      easing.damp(portalRef.current, "blend", worldOpen ? 1 : 0, 0.2, delta);
+  });
 
   return (
     <>
       <mesh
         onDoubleClick={() => setActive(isActive ? null : name)}
         position={position}
-        ref={ref}
+        ref={meshRef}
+        name={name}
       >
         <planeGeometry args={[5, 4]} />
-        <MeshPortalMaterial blend={isActive ? 1 : 0}>
+        <MeshPortalMaterial ref={portalRef}>
           <ambientLight intensity={1} />
 
           <Center bottom>
