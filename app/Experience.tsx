@@ -5,7 +5,7 @@ import { OrbitControls } from "@react-three/drei";
 
 import { PortalWorld } from "./PortalWorld";
 
-export type Active = "ocean" | "fire" | "forest" | null;
+export type Active = "ocean" | "park" | "metro" | null;
 
 export const Experience = () => {
   const [active, setActive] = useState<Active>(null);
@@ -25,15 +25,15 @@ export const Experience = () => {
       />
       <PortalWorld
         position={[0, 3, 0]}
-        mapPath="/forest.jpeg"
-        name="forest"
+        mapPath="/park.jpeg"
+        name="park"
         active={active}
         setActive={setActive}
       />
       <PortalWorld
         position={[8, 0, 0]}
-        mapPath="/fire.jpeg"
-        name="fire"
+        mapPath="/metropolis.jpeg"
+        name="metro"
         active={active}
         setActive={setActive}
       />
