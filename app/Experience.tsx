@@ -17,6 +17,7 @@ export const Experience = () => {
       <ambientLight intensity={1} />
 
       <PortalWorld
+        position={[-6, 0, 0]}
         mapPath="/ocean.jpeg"
         name="ocean"
         active={active}
