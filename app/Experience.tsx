@@ -1,19 +1,27 @@
 "use client";
 
-import { Canvas } from "@react-three/fiber";
+import { useState } from "react";
 import { OrbitControls } from "@react-three/drei";
 
-export const Experience = () => {
-  return (
-    <Canvas>
-      <color args={["black"]} attach="background" />
-      <OrbitControls />
-      <ambientLight />
+import { PortalWorld } from "./PortalWorld";
 
-      <mesh rotation={[Math.PI * 0.25, Math.PI * 0.25, 0]}>
-        <boxGeometry args={[1, 1, 1]} />
-        <meshNormalMaterial />
-      </mesh>
-    </Canvas>
+export type Active = "ocean" | "volcano" | "forest" | null;
+
+export const Experience = () => {
+  const [active, setActive] = useState<Active>(null);
+
+  return (
+    <>
+      <color args={["white"]} attach="background" />
+      <OrbitControls />
+      <ambientLight intensity={1} />
+
+      <PortalWorld
+        mapPath="/ocean.jpeg"
+        name="ocean"
+        active={active}
+        setActive={setActive}
+      />
+    </>
   );
 };
