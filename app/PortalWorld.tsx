@@ -72,7 +72,7 @@ export const PortalWorld = ({
           ]}
         />
         <MeshPortalMaterial ref={portalRef}>
-          <ambientLight intensity={1} />
+          <ambientLight intensity={1.5} />
 
           {/* TODO: Try adding a portal back to the room.
           Set pos-z to a positive number,

@@ -51,8 +51,6 @@ export const Experience = () => {
         ref={controlsRef}
         {...(!!active ? activeControlProps : inactiveControlProps)}
       />
-      <ambientLight intensity={1} />
-
       <Phone
         name="park"
         position={[0, 2, 0]}
