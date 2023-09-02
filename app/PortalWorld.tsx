@@ -3,7 +3,6 @@ import {
   MeshPortalMaterial,
   PortalMaterialType,
   useTexture,
-  RoundedBox,
 } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
@@ -65,7 +64,6 @@ export const PortalWorld = ({
       <mesh
         onDoubleClick={() => setActive(isActive ? null : name)}
         position={[-1.85, -4.4, zOffset]}
-        name={name}
       >
         <extrudeGeometry
           args={[

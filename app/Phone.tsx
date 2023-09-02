@@ -1,13 +1,15 @@
 import { useRef, useEffect } from "react";
 import { RoundedBox } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
+import { Active } from "./Experience";
 
 type Props = {
   renderPortal: (zOffset: number) => React.ReactElement;
   position: [number, number, number];
+  name: NonNullable<Active>;
 };
 
-export const Phone = ({ position, renderPortal }: Props) => {
+export const Phone = ({ position, renderPortal, name }: Props) => {
   const camera = useThree((state) => state.camera);
   useEffect(() => {
     ref.current?.lookAt(camera.position);
@@ -27,7 +29,7 @@ export const Phone = ({ position, renderPortal }: Props) => {
           <meshBasicMaterial color="black" toneMapped={false} />
         </RoundedBox>
       </mesh>
-      <mesh>
+      <mesh name={name}>
         <RoundedBox args={[5, 10, phoneDepth]} radius={0.5}>
           <meshBasicMaterial color="black" toneMapped={false} />
         </RoundedBox>
