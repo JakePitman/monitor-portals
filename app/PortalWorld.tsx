@@ -44,7 +44,7 @@ export const PortalWorld = ({
       setTimeout(() => {
         portalRef.current &&
           easing.damp(portalRef.current, "blend", 1, 0, delta);
-      }, 500);
+      }, 700);
     } else {
       portalRef.current && easing.damp(portalRef.current, "blend", 0, 0, delta);
     }
@@ -58,13 +58,17 @@ export const PortalWorld = ({
         ref={meshRef}
         name={name}
       >
-        <planeGeometry args={[5, 4]} />
+        <planeGeometry args={[5, 10]} />
         <MeshPortalMaterial ref={portalRef}>
           <ambientLight intensity={1} />
 
           {/* TODO: Try adding a portal back to the room.
           Set pos-z to a positive number,
           so it's behind the camera after zooming*/}
+          <mesh position={[0, 0, 2]} rotation={[0, Math.PI, 0]}>
+            <planeGeometry />
+            <meshBasicMaterial color="red" />
+          </mesh>
           <mesh>
             <sphereGeometry args={[10, 64, 64]} />
             <meshStandardMaterial map={map} side={THREE.BackSide} />

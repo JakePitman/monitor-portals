@@ -39,7 +39,7 @@ export const Experience = () => {
       const xOffset = x === 0 ? 0 : x > 0 ? -1 : 1;
       controlsRef.current?.setLookAt(x + xOffset, y, z + 1, x, y, z, true);
     } else {
-      controlsRef.current?.setLookAt(0, 0, 10, 0, 0, 0, true);
+      controlsRef.current?.setLookAt(0, -4, 10, 0, 0, 0, true);
     }
   }, [active]);
 
@@ -56,21 +56,21 @@ export const Experience = () => {
       <ambientLight intensity={1} />
 
       <PortalWorld
-        position={[-8, 0, 0]}
+        position={[-8, 1, 0]}
         mapPath="/ocean.jpeg"
         name="ocean"
         active={active}
         setActive={setActive}
       />
       <PortalWorld
-        position={[0, 3, 0]}
+        position={[0, 2, 0]}
         mapPath="/park.jpeg"
         name="park"
         active={active}
         setActive={setActive}
       />
       <PortalWorld
-        position={[8, 0, 0]}
+        position={[8, 1, 0]}
         mapPath="/metropolis.jpeg"
         name="metro"
         active={active}
