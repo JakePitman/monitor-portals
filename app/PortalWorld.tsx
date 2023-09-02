@@ -64,8 +64,8 @@ export const PortalWorld = ({
     <>
       <mesh
         onDoubleClick={() => setActive(isActive ? null : name)}
-        name={name}
         position={[-1.85, -4.4, zOffset]}
+        name={name}
       >
         <extrudeGeometry
           args={[
