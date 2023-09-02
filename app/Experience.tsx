@@ -18,15 +18,10 @@ export const Experience = () => {
     if (active) {
       const targetPosition = new THREE.Vector3();
       scene.getObjectByName(active)?.getWorldPosition(targetPosition);
-      controlsRef.current?.setLookAt(
-        0,
-        0,
-        0,
-        targetPosition.x,
-        targetPosition.y,
-        targetPosition.z,
-        true
-      );
+      console.log({ targetPosition });
+      const { x, y, z } = targetPosition;
+      const xOffset = x === 0 ? 0 : x > 0 ? -1 : 1;
+      controlsRef.current?.setLookAt(x + xOffset, y, z + 1, x, y, z, true);
     } else {
       controlsRef.current?.setLookAt(0, 0, 10, 0, 0, 0, true);
     }
@@ -35,7 +30,13 @@ export const Experience = () => {
   return (
     <>
       <color args={["white"]} attach="background" />
-      <CameraControls ref={controlsRef} />
+      <CameraControls
+        ref={controlsRef}
+        maxPolarAngle={Math.PI * 1.5}
+        minPolarAngle={Math.PI / 6}
+        maxAzimuthAngle={0.5}
+        minAzimuthAngle={-0.5}
+      />
       <ambientLight intensity={1} />
 
       <PortalWorld
