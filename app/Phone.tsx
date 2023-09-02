@@ -19,7 +19,7 @@ export const Phone = ({ position, renderPortal }: Props) => {
     <group position={position} ref={ref}>
       <mesh>
         <RoundedBox args={[5, 10, phoneDepth]} radius={0.5}>
-          <meshStandardMaterial color="white" toneMapped={false} />
+          <meshStandardMaterial color="black" toneMapped={false} />
         </RoundedBox>
       </mesh>
       {renderPortal(0.2)}
