@@ -26,19 +26,20 @@ export const Experience = () => {
     }
   }, [active]);
 
-  const zoomDistance = active ? 1 : 10;
+  const minZoomDistance = active ? -Infinity : 10;
+  const maxZoomDistance = active ? 1 : 10;
 
   return (
     <>
       <color args={["white"]} attach="background" />
       <CameraControls
         ref={controlsRef}
-        maxPolarAngle={Math.PI * 1.5}
-        minPolarAngle={Math.PI / 6}
-        maxAzimuthAngle={0.5}
-        minAzimuthAngle={-0.5}
-        minDistance={zoomDistance}
-        maxDistance={zoomDistance}
+        maxPolarAngle={active ? Math.PI * 2 : Math.PI * 1.5}
+        minPolarAngle={active ? Math.PI * -2 : Math.PI / 6}
+        maxAzimuthAngle={active ? 100 : 0.5}
+        minAzimuthAngle={active ? -100 : -0.5}
+        minDistance={minZoomDistance}
+        maxDistance={maxZoomDistance}
       />
       <ambientLight intensity={1} />
 
