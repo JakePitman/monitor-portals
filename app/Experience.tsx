@@ -9,6 +9,23 @@ import { PortalWorld } from "./PortalWorld";
 
 export type Active = "ocean" | "park" | "metro" | null;
 
+const activeControlProps = {
+  maxPolarAngle: Math.PI * 2,
+  minPolarAngle: Math.PI * -2,
+  maxAzimuthAngle: 100,
+  minAzimuthAngle: -100,
+  minDistance: -Infinity,
+  maxDistance: 1,
+};
+const inactiveControlProps = {
+  maxPolarAngle: Math.PI * 1.5,
+  minPolarAngle: Math.PI / 6,
+  maxAzimuthAngle: 0.5,
+  minAzimuthAngle: -0.5,
+  minDistance: 10,
+  maxDistance: 10,
+};
+
 export const Experience = () => {
   const [active, setActive] = useState<Active>(null);
   const controlsRef = useRef<CameraControls>(null);
@@ -34,12 +51,7 @@ export const Experience = () => {
       <color args={["white"]} attach="background" />
       <CameraControls
         ref={controlsRef}
-        maxPolarAngle={active ? Math.PI * 2 : Math.PI * 1.5}
-        minPolarAngle={active ? Math.PI * -2 : Math.PI / 6}
-        maxAzimuthAngle={active ? 100 : 0.5}
-        minAzimuthAngle={active ? -100 : -0.5}
-        minDistance={minZoomDistance}
-        maxDistance={maxZoomDistance}
+        {...(!!active ? activeControlProps : inactiveControlProps)}
       />
       <ambientLight intensity={1} />
 
