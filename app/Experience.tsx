@@ -18,7 +18,6 @@ export const Experience = () => {
     if (active) {
       const targetPosition = new THREE.Vector3();
       scene.getObjectByName(active)?.getWorldPosition(targetPosition);
-      console.log({ targetPosition });
       const { x, y, z } = targetPosition;
       const xOffset = x === 0 ? 0 : x > 0 ? -1 : 1;
       controlsRef.current?.setLookAt(x + xOffset, y, z + 1, x, y, z, true);
@@ -26,6 +25,8 @@ export const Experience = () => {
       controlsRef.current?.setLookAt(0, 0, 10, 0, 0, 0, true);
     }
   }, [active]);
+
+  const zoomDistance = active ? 1 : 10;
 
   return (
     <>
@@ -36,6 +37,8 @@ export const Experience = () => {
         minPolarAngle={Math.PI / 6}
         maxAzimuthAngle={0.5}
         minAzimuthAngle={-0.5}
+        minDistance={zoomDistance}
+        maxDistance={zoomDistance}
       />
       <ambientLight intensity={1} />
 
