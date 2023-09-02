@@ -6,6 +6,7 @@ import * as THREE from "three";
 import { CameraControls } from "@react-three/drei";
 
 import { PortalWorld } from "./PortalWorld";
+import { Phone } from "./Phone";
 
 export type Active = "ocean" | "park" | "metro" | null;
 
@@ -43,9 +44,6 @@ export const Experience = () => {
     }
   }, [active]);
 
-  const minZoomDistance = active ? -Infinity : 10;
-  const maxZoomDistance = active ? 1 : 10;
-
   return (
     <>
       <color args={["white"]} attach="background" />
@@ -55,26 +53,43 @@ export const Experience = () => {
       />
       <ambientLight intensity={1} />
 
-      <PortalWorld
-        position={[-8, 1, 0]}
-        mapPath="/ocean.jpeg"
-        name="ocean"
-        active={active}
-        setActive={setActive}
-      />
-      <PortalWorld
+      <Phone
         position={[0, 2, 0]}
-        mapPath="/park.jpeg"
-        name="park"
-        active={active}
-        setActive={setActive}
+        renderPortal={(zOffset) => (
+          <PortalWorld
+            zOffset={zOffset}
+            mapPath="/park.jpeg"
+            name="park"
+            active={active}
+            setActive={setActive}
+          />
+        )}
       />
-      <PortalWorld
+
+      <Phone
+        position={[-8, 1, 0]}
+        renderPortal={(zOffset) => (
+          <PortalWorld
+            zOffset={zOffset}
+            mapPath="/ocean.jpeg"
+            name="ocean"
+            active={active}
+            setActive={setActive}
+          />
+        )}
+      />
+
+      <Phone
         position={[8, 1, 0]}
-        mapPath="/metropolis.jpeg"
-        name="metro"
-        active={active}
-        setActive={setActive}
+        renderPortal={(zOffset) => (
+          <PortalWorld
+            zOffset={zOffset}
+            mapPath="/metropolis.jpeg"
+            name="metro"
+            active={active}
+            setActive={setActive}
+          />
+        )}
       />
     </>
   );

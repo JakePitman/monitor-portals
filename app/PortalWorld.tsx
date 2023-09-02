@@ -1,13 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import {
   MeshPortalMaterial,
   PortalMaterialType,
   useTexture,
-  Text3D,
-  Center,
-  Float,
+  RoundedBox,
 } from "@react-three/drei";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { easing } from "maath";
 
@@ -18,25 +16,37 @@ type Props = {
   name: NonNullable<Active>;
   active: string | null;
   setActive: React.Dispatch<React.SetStateAction<Active>>;
-  position: [number, number, number];
+  zOffset: number;
 };
+
+const eps = 0.00001;
+function createShape(width: number, height: number, radius0: number) {
+  const shape = new THREE.Shape();
+  const radius = radius0 - eps;
+  shape.absarc(eps, eps, eps, -Math.PI / 2, -Math.PI, true);
+  shape.absarc(eps, height - radius * 2, eps, Math.PI, Math.PI / 2, true);
+  shape.absarc(
+    width - radius * 2,
+    height - radius * 2,
+    eps,
+    Math.PI / 2,
+    0,
+    true
+  );
+  shape.absarc(width - radius * 2, eps, eps, 0, -Math.PI / 2, true);
+  return shape;
+}
 
 export const PortalWorld = ({
   mapPath,
   name,
   active,
   setActive,
-  position,
+  zOffset,
 }: Props) => {
   const map = useTexture(mapPath);
   const isActive = name === active;
-  const meshRef = useRef<THREE.Mesh>(null);
   const portalRef = useRef<PortalMaterialType>(null);
-  const camera = useThree((state) => state.camera);
-
-  useEffect(() => {
-    meshRef.current?.lookAt(camera.position);
-  }, []);
 
   useFrame((_state, delta) => {
     const worldOpen = isActive;
@@ -54,11 +64,15 @@ export const PortalWorld = ({
     <>
       <mesh
         onDoubleClick={() => setActive(isActive ? null : name)}
-        position={position}
-        ref={meshRef}
         name={name}
+        position={[-1.85, -4.4, zOffset]}
       >
-        <planeGeometry args={[5, 10]} />
+        <extrudeGeometry
+          args={[
+            createShape(3.7, 8.7, 0),
+            { depth: 0, bevelEnabled: true, bevelSize: 0.5 },
+          ]}
+        />
         <MeshPortalMaterial ref={portalRef}>
           <ambientLight intensity={1} />
 
