@@ -7,6 +7,7 @@ import { CameraControls } from "@react-three/drei";
 
 import { PortalWorld } from "./PortalWorld";
 import { Phone } from "./Phone";
+import { Room } from "./Room";
 
 export type Active = "ocean" | "park" | "metro" | null;
 
@@ -51,6 +52,8 @@ export const Experience = () => {
         ref={controlsRef}
         {...(!!active ? activeControlProps : inactiveControlProps)}
       />
+      <ambientLight />
+      <Room />
       <Phone
         name="park"
         position={[0, 2, 0]}
