@@ -21,8 +21,8 @@ const activeControlProps = {
 const inactiveControlProps = {
   maxPolarAngle: Math.PI * 1.5,
   minPolarAngle: Math.PI / 6,
-  maxAzimuthAngle: 0.5,
-  minAzimuthAngle: -0.5,
+  maxAzimuthAngle: 1,
+  minAzimuthAngle: -1,
   minDistance: 10,
   maxDistance: 10,
 };
