@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import { CameraControls } from "@react-three/drei";
+import { CameraControls, useHelper } from "@react-three/drei";
 
 import { PortalWorld } from "./PortalWorld";
 import { Phone } from "./Phone";
@@ -45,6 +45,9 @@ export const Experience = () => {
     }
   }, [active]);
 
+  const directionalLightRef = useRef<THREE.DirectionalLight>(null);
+  useHelper(directionalLightRef, THREE.DirectionalLightHelper);
+
   return (
     <>
       <color args={["white"]} attach="background" />
@@ -53,7 +56,15 @@ export const Experience = () => {
         {...(!!active ? activeControlProps : inactiveControlProps)}
       />
       <ambientLight />
+      <directionalLight
+        ref={directionalLightRef}
+        position={[0, 8, 10]}
+        intensity={5}
+        castShadow
+      />
+
       <Room />
+
       <Phone
         name="park"
         position={[0, 2, 0]}

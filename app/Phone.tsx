@@ -20,17 +20,17 @@ export const Phone = ({ position, renderPortal, name }: Props) => {
   return (
     <group position={position} ref={ref}>
       <mesh position={[-2.5, 3, 0]} scale={0.1}>
-        <RoundedBox args={[1.5, 6, 1.5]} radius={0.3}>
+        <RoundedBox args={[1.5, 6, 1.5]} radius={0.3} castShadow>
           <meshBasicMaterial color="black" toneMapped={false} />
         </RoundedBox>
       </mesh>
       <mesh position={[-2.5, 2, 0]} scale={0.1}>
-        <RoundedBox args={[1.5, 6, 1.5]} radius={0.3}>
+        <RoundedBox args={[1.5, 6, 1.5]} radius={0.3} castShadow>
           <meshBasicMaterial color="black" toneMapped={false} />
         </RoundedBox>
       </mesh>
       <mesh name={name}>
-        <RoundedBox args={[5, 10, phoneDepth]} radius={0.5}>
+        <RoundedBox args={[5, 10, phoneDepth]} radius={0.5} castShadow>
           <meshBasicMaterial color="black" toneMapped={false} />
         </RoundedBox>
       </mesh>
