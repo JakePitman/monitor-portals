@@ -61,6 +61,13 @@ export const Experience = () => {
         position={[0, 8, 10]}
         intensity={5}
         castShadow
+        shadow-mapSize={[1024, 1024]}
+        shadow-camera-near={6}
+        shadow-camera-far={25}
+        shadow-camera-top={8}
+        shadow-camera-right={10}
+        shadow-camera-bottom={-6}
+        shadow-camera-left={-10}
       />
 
       <Room />
@@ -68,6 +75,7 @@ export const Experience = () => {
       <Phone
         name="park"
         position={[0, 2, 0]}
+        active={active}
         renderPortal={(zOffset) => (
           <PortalWorld
             zOffset={zOffset}
@@ -82,6 +90,7 @@ export const Experience = () => {
       <Phone
         name="ocean"
         position={[-8, 1, 0]}
+        active={active}
         renderPortal={(zOffset) => (
           <PortalWorld
             zOffset={zOffset}
@@ -96,6 +105,7 @@ export const Experience = () => {
       <Phone
         name="metro"
         position={[8, 1, 0]}
+        active={active}
         renderPortal={(zOffset) => (
           <PortalWorld
             zOffset={zOffset}
