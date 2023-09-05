@@ -20,7 +20,7 @@ const activeControlProps = {
   maxDistance: 1,
 };
 const inactiveControlProps = {
-  maxPolarAngle: Math.PI * 1.5,
+  maxPolarAngle: Math.PI / 1.5,
   minPolarAngle: Math.PI / 6,
   maxAzimuthAngle: 1,
   minAzimuthAngle: -1,
@@ -40,7 +40,7 @@ export const Experience = () => {
       console.log(targetPosition);
       const { x, y, z } = targetPosition;
       const isCenterPhone = x < 2 && x > -2;
-      const xOffset = isCenterPhone ? x : x > 0 ? -1 : 1;
+      const xOffset = isCenterPhone ? -x : x > 0 ? -1 : 1;
       controlsRef.current?.setLookAt(x + xOffset, y, z + 1, x, y, z, true);
     } else {
       controlsRef.current?.setLookAt(0, -4, 10, 0, 0, 0, true);
