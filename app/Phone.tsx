@@ -25,7 +25,7 @@ export const Phone = ({ position, renderPortal, name, active }: Props) => {
       floatIntensity={isActive ? 0 : 1}
       rotationIntensity={isActive ? 0 : 1}
     >
-      <group position={position} ref={ref}>
+      <group position={position} ref={ref} name={name}>
         <mesh position={[-2.5, 3, 0]} scale={0.1}>
           <RoundedBox args={[1.5, 6, 1.5]} radius={0.3} castShadow>
             <meshBasicMaterial color="black" toneMapped={false} />
@@ -36,7 +36,7 @@ export const Phone = ({ position, renderPortal, name, active }: Props) => {
             <meshBasicMaterial color="black" toneMapped={false} />
           </RoundedBox>
         </mesh>
-        <mesh name={name}>
+        <mesh>
           <RoundedBox args={[5, 10, phoneDepth]} radius={0.5} castShadow>
             <meshBasicMaterial color="black" toneMapped={false} />
           </RoundedBox>

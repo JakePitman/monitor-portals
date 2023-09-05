@@ -37,8 +37,10 @@ export const Experience = () => {
     if (active) {
       const targetPosition = new THREE.Vector3();
       scene.getObjectByName(active)?.getWorldPosition(targetPosition);
+      console.log(targetPosition);
       const { x, y, z } = targetPosition;
-      const xOffset = x === 0 ? 0 : x > 0 ? -1 : 1;
+      const isCenterPhone = x < 2 && x > -2;
+      const xOffset = isCenterPhone ? x : x > 0 ? -1 : 1;
       controlsRef.current?.setLookAt(x + xOffset, y, z + 1, x, y, z, true);
     } else {
       controlsRef.current?.setLookAt(0, -4, 10, 0, 0, 0, true);
