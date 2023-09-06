@@ -3,6 +3,8 @@ import {
   MeshPortalMaterial,
   PortalMaterialType,
   useTexture,
+  useGLTF,
+  Float,
 } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
@@ -46,6 +48,7 @@ export const PortalWorld = ({
   const map = useTexture(mapPath);
   const isActive = name === active;
   const portalRef = useRef<PortalMaterialType>(null);
+  const openSphere = useGLTF("/open-sphere.glb");
 
   useFrame((_state, delta) => {
     const worldOpen = isActive;
@@ -74,17 +77,22 @@ export const PortalWorld = ({
         <MeshPortalMaterial ref={portalRef}>
           <ambientLight intensity={1.5} />
 
-          {/* TODO: Try adding a portal back to the room.
-          Set pos-z to a positive number,
-          so it's behind the camera after zooming*/}
-          <mesh position={[0, 0, 2]} rotation={[0, Math.PI, 0]}>
-            <planeGeometry />
-            <meshBasicMaterial color="red" />
-          </mesh>
-          <mesh>
-            <sphereGeometry args={[10, 64, 64]} />
+          {/* Sphere (environment) */}
+          <mesh
+            geometry={openSphere.scene.children[0].geometry}
+            scale={10}
+            rotation={[Math.PI, 0, 0]}
+          >
             <meshStandardMaterial map={map} side={THREE.BackSide} />
           </mesh>
+
+          {/* Room */}
+          <Float rotationIntensity={1}>
+            <mesh position={[-3.5, 4, 10]}>
+              <boxGeometry />
+              <meshBasicMaterial color="red" />
+            </mesh>
+          </Float>
         </MeshPortalMaterial>
       </mesh>
     </>
