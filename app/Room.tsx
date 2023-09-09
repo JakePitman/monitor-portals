@@ -1,4 +1,4 @@
-import { RoundedBox } from "@react-three/drei";
+import { RoundedBox, useGLTF, useTexture } from "@react-three/drei";
 import * as THREE from "three";
 
 const Desk = () => (
@@ -40,12 +40,18 @@ const Wall = ({ dimensions, position }: WallProps) => {
 };
 
 export const Room = () => {
+  const { nodes } = useGLTF("/room.glb");
+  const texture = useTexture("/baked.jpg");
+  texture.flipY = false;
   return (
-    <group>
-      <Wall dimensions={[35, 40, 1]} position={[0, -5, -10]} />
-      <Wall dimensions={[1, 40, 35]} position={[-17.5, -5, 0]} />
-      <Wall dimensions={[1, 40, 35]} position={[17.5, -5, 0]} />
-      <Desk />
-    </group>
+    <mesh
+      scale={1.2}
+      position={[0, -20, 3]}
+      rotation={[0, Math.PI, 0]}
+      geometry={nodes.merged.geometry}
+      receiveShadow
+    >
+      <meshStandardMaterial map={texture} />
+    </mesh>
   );
 };

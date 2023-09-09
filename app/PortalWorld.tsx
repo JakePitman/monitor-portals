@@ -87,12 +87,10 @@ export const PortalWorld = ({
           </mesh>
 
           {/* Room */}
-          <Float rotationIntensity={1}>
-            <mesh position={[-3.5, 4, 10]}>
-              <boxGeometry />
-              <meshBasicMaterial color="red" />
-            </mesh>
-          </Float>
+          <mesh position={[0, 0, 0]} scale={30}>
+            <boxGeometry />
+            <meshBasicMaterial color="white" side={THREE.BackSide} />
+          </mesh>
         </MeshPortalMaterial>
       </mesh>
     </>

@@ -37,7 +37,6 @@ export const Experience = () => {
     if (active) {
       const targetPosition = new THREE.Vector3();
       scene.getObjectByName(active)?.getWorldPosition(targetPosition);
-      console.log(targetPosition);
       const { x, y, z } = targetPosition;
       const isCenterPhone = x < 2 && x > -2;
       const xOffset = isCenterPhone ? -x : x > 0 ? -1 : 1;
@@ -65,7 +64,7 @@ export const Experience = () => {
         castShadow
         shadow-mapSize={[1024, 1024]}
         shadow-camera-near={6}
-        shadow-camera-far={25}
+        shadow-camera-far={30}
         shadow-camera-top={8}
         shadow-camera-right={10}
         shadow-camera-bottom={-6}
@@ -74,9 +73,10 @@ export const Experience = () => {
 
       <Room />
 
+      {/*
       <Phone
         name="park"
-        position={[0, 2, 0]}
+        position={[0, 3, -4]}
         active={active}
         renderPortal={(zOffset) => (
           <PortalWorld
@@ -91,7 +91,7 @@ export const Experience = () => {
 
       <Phone
         name="ocean"
-        position={[-8, 1, 0]}
+        position={[-8, 2, -4]}
         active={active}
         renderPortal={(zOffset) => (
           <PortalWorld
@@ -106,7 +106,7 @@ export const Experience = () => {
 
       <Phone
         name="metro"
-        position={[8, 1, 0]}
+        position={[8, 2, -4]}
         active={active}
         renderPortal={(zOffset) => (
           <PortalWorld
@@ -118,6 +118,7 @@ export const Experience = () => {
           />
         )}
       />
+      */}
     </>
   );
 };
