@@ -46,7 +46,7 @@ export const Room = () => {
   return (
     <mesh
       scale={1.2}
-      position={[0, -20, 3]}
+      position={[0, -5, -14]}
       rotation={[0, Math.PI, 0]}
       geometry={nodes.merged.geometry}
       receiveShadow

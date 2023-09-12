@@ -65,15 +65,14 @@ export const Experience = () => {
         shadow-mapSize={[1024, 1024]}
         shadow-camera-near={6}
         shadow-camera-far={30}
-        shadow-camera-top={8}
-        shadow-camera-right={10}
+        shadow-camera-top={14}
+        shadow-camera-right={14}
         shadow-camera-bottom={-6}
-        shadow-camera-left={-10}
+        shadow-camera-left={-14}
       />
 
       <Room />
 
-      {/*
       <Phone
         name="park"
         position={[0, 3, -4]}
@@ -118,7 +117,6 @@ export const Experience = () => {
           />
         )}
       />
-      */}
     </>
   );
 };
