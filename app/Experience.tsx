@@ -9,7 +9,7 @@ import { PortalWorld } from "./PortalWorld";
 import { Phone } from "./Phone";
 import { Room } from "./Room";
 
-export type Active = "ocean" | "park" | "metro" | null;
+export type Active = "ocean" | "park" | "snow" | null;
 
 const activeControlProps = {
   maxPolarAngle: Math.PI * 2,
@@ -89,14 +89,14 @@ export const Experience = () => {
       />
 
       <Phone
-        name="ocean"
+        name="snow"
         position={[-8, 2, -4]}
         active={active}
         renderPortal={(zOffset) => (
           <PortalWorld
             zOffset={zOffset}
-            mapPath="/ocean.jpeg"
-            name="ocean"
+            mapPath="/snow.jpeg"
+            name="snow"
             active={active}
             setActive={setActive}
           />
@@ -104,14 +104,14 @@ export const Experience = () => {
       />
 
       <Phone
-        name="metro"
+        name="ocean"
         position={[8, 2, -4]}
         active={active}
         renderPortal={(zOffset) => (
           <PortalWorld
             zOffset={zOffset}
-            mapPath="/metropolis.jpeg"
-            name="metro"
+            mapPath="/ocean.jpeg"
+            name="ocean"
             active={active}
             setActive={setActive}
           />
