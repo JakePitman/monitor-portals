@@ -22,8 +22,8 @@ export const Phone = ({ position, renderPortal, name, active }: Props) => {
 
   return (
     <Float
-      floatIntensity={isActive ? 0 : 1}
-      rotationIntensity={isActive ? 0 : 1}
+      floatIntensity={isActive ? 0 : 0.5}
+      rotationIntensity={isActive ? 0 : 0.5}
     >
       <group position={position} ref={ref} name={name}>
         <mesh position={[-2.5, 3, 0]} scale={0.1}>
