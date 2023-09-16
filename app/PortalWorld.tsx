@@ -9,6 +9,7 @@ import {
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { easing } from "maath";
+import { useControls } from "leva";
 
 import { Active } from "./Experience";
 
@@ -49,6 +50,16 @@ export const PortalWorld = ({
   const isActive = name === active;
   const portalRef = useRef<PortalMaterialType>(null);
   const openSphere = useGLTF("/open-sphere.glb");
+  const { nodes } = useGLTF("/room-reverse.glb");
+  const roomReverseTexture = useTexture("/baked-reverse.jpg");
+  roomReverseTexture.flipY = false;
+  console.log(nodes);
+
+  const { position, rotation, scale } = useControls({
+    position: [-4.240399999999987, -3.3, 28.5],
+    rotation: [-0.05000000000000004, 2.968599999999987, 0.00509999999999996],
+    scale: 2,
+  });
 
   useFrame((_state, delta) => {
     const worldOpen = isActive;
@@ -87,10 +98,22 @@ export const PortalWorld = ({
           </mesh>
 
           {/* Room */}
-          <mesh position={[0, 0, 0]} scale={30}>
+          <mesh position={[0, 0, 10]} rotation={[0, 1.3, 0]} scale={40}>
             <boxGeometry />
-            <meshBasicMaterial color="white" side={THREE.BackSide} />
+            <meshBasicMaterial color="#323b4a" side={THREE.BackSide} />
           </mesh>
+
+          {/* TODO: Chair is visible from outside portal. Render on active status */}
+          <Float floatIntensity={0.5} rotationIntensity={0.5}>
+            <mesh
+              geometry={nodes.merged.geometry}
+              scale={scale}
+              rotation={rotation}
+              position={position}
+            >
+              <meshStandardMaterial map={roomReverseTexture} />
+            </mesh>
+          </Float>
         </MeshPortalMaterial>
       </mesh>
     </>
