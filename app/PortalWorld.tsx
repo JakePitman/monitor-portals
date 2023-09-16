@@ -56,9 +56,9 @@ export const PortalWorld = ({
   console.log(nodes);
 
   const { position, rotation, scale } = useControls({
-    position: [-4.240399999999987, -3.3, 28.5],
-    rotation: [-0.05000000000000004, 2.968599999999987, 0.00509999999999996],
-    scale: 2,
+    position: [-20, 3.2, 67.7],
+    rotation: [0, -0.35300000000000004, 0],
+    scale: 52,
   });
 
   useFrame((_state, delta) => {
@@ -98,8 +98,8 @@ export const PortalWorld = ({
           </mesh>
 
           {/* Room */}
-          <mesh position={[0, 0, 10]} rotation={[0, 1.3, 0]} scale={40}>
-            <boxGeometry />
+          <mesh position={position} rotation={rotation} scale={scale}>
+            <planeGeometry />
             <meshBasicMaterial color="#323b4a" side={THREE.BackSide} />
           </mesh>
 
@@ -107,11 +107,14 @@ export const PortalWorld = ({
           <Float floatIntensity={0.5} rotationIntensity={0.5}>
             <mesh
               geometry={nodes.merged.geometry}
-              scale={scale}
-              rotation={rotation}
-              position={position}
+              scale={2}
+              rotation={[-0.05, 2.96, 0.0]}
+              position={[-4.24, -3.3, 28.5]}
             >
-              <meshStandardMaterial map={roomReverseTexture} />
+              <meshStandardMaterial
+                map={roomReverseTexture}
+                toneMapped={false}
+              />
             </mesh>
           </Float>
         </MeshPortalMaterial>
