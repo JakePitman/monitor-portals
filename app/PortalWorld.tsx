@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import {
   MeshPortalMaterial,
   PortalMaterialType,
@@ -48,6 +48,7 @@ export const PortalWorld = ({
   zOffset,
   messages,
 }: Props) => {
+  const [isHovered, setIsHovered] = useState(false);
   const map = useTexture(mapPath);
   const isActive = name === active;
   const portalRef = useRef<PortalMaterialType>(null);
@@ -73,9 +74,11 @@ export const PortalWorld = ({
       <mesh
         onDoubleClick={() => setActive(name)}
         position={[-1.85, -4.4, zOffset]}
+        onPointerEnter={() => setIsHovered(true)}
+        onPointerLeave={() => setIsHovered(false)}
       >
         {messages.map((message, i) => (
-          <Message text={message} iteration={i} key={i} />
+          <Message text={message} iteration={i} key={i} isHovered={isHovered} />
         ))}
         <extrudeGeometry
           args={[
