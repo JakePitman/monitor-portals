@@ -29,7 +29,7 @@ export const Message = ({ text, iteration, isHovered }: Props) => {
     hovered: isOddIteration ? -2.3 : 2.3,
   };
   const triangleYPosition = {
-    idle: -0.3,
+    idle: -0.17,
     hovered: 0,
   };
 
@@ -123,7 +123,7 @@ export const Message = ({ text, iteration, isHovered }: Props) => {
         rotation={[0, 0, Math.PI * 0.23]}
         ref={triangleRef}
       >
-        <boxGeometry args={[1, 1, messageDepth]} />
+        <boxGeometry args={[1.1, 1.1, messageDepth]} />
       </mesh>
     </group>
   );
