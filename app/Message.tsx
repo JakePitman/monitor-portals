@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Text, RoundedBox } from "@react-three/drei";
 import { MeshStandardMaterial } from "three";
@@ -15,12 +15,15 @@ type Props = {
 
 export const Message = ({ text, iteration, isHovered }: Props) => {
   const height = 1;
+  const isOddIteration = useMemo(() => iteration % 2 === 0, [iteration]);
+
+  const xOffset = { idle: 1.8, hovered: isOddIteration ? 4 : -0 };
   const yOffset = iteration * (height - 0.2);
   const zOffset = { idle: 0.5, hovered: 3 };
-  const triangleXPosition = iteration % 2 === 0 ? -1.5 : 1.5;
+  const yRotation = { idle: 0, hovered: isOddIteration ? -0.7 : 0.7 };
+
+  const triangleXPosition = isOddIteration ? -1.5 : 1.5;
   const groupRef = useRef(null);
-  const yRotation = { idle: 0, hovered: iteration % 2 === 0 ? -0.7 : 0.7 };
-  const xOffset = { idle: 1.8, hovered: iteration % 2 === 0 ? 4 : -0 };
 
   useFrame((_state, delta) => {
     if (isHovered) {
