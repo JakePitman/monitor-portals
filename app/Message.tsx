@@ -4,16 +4,23 @@ import { MeshStandardMaterial } from "three";
 const messageMaterial = new MeshStandardMaterial({ color: "white" });
 
 const messageDepth = 0.3;
-export const Message = () => {
+type Props = {
+  text: string;
+  iteration: number;
+};
+
+export const Message = ({ text, iteration }: Props) => {
+  const height = 1;
+  const yOffset = iteration * (height - 0.2);
   return (
-    <group position={[0, 0, 1]}>
+    <group position={[1.8, 8 - yOffset, 0.5]} scale={0.5}>
       <RoundedBox
         material={messageMaterial}
-        args={[5, 1, messageDepth]}
+        args={[5, height, messageDepth]}
         radius={0.15}
       >
         <Text position={[0, 0, 0.2]} scale={0.5} color={"black"}>
-          Hello
+          {text}
         </Text>
       </RoundedBox>
 

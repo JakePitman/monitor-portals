@@ -84,6 +84,7 @@ export const Experience = () => {
             name="park"
             active={active}
             setActive={setActive}
+            messages={["OMG wow", "That's amazing!!", "Send me a postcard!"]}
           />
         )}
       />
@@ -99,6 +100,7 @@ export const Experience = () => {
             name="snow"
             active={active}
             setActive={setActive}
+            messages={["So beautifullll", "Where is this??"]}
           />
         )}
       />
@@ -114,6 +116,7 @@ export const Experience = () => {
             name="ocean"
             active={active}
             setActive={setActive}
+            messages={["Wish I was there", "Incredible"]}
           />
         )}
       />

@@ -9,7 +9,6 @@ import {
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { easing } from "maath";
-import { useControls } from "leva";
 
 import { Active } from "./Experience";
 import { Message } from "./Message";
@@ -20,6 +19,7 @@ type Props = {
   active: Active;
   setActive: React.Dispatch<React.SetStateAction<Active>>;
   zOffset: number;
+  messages: string[];
 };
 
 const eps = 0.00001;
@@ -46,6 +46,7 @@ export const PortalWorld = ({
   active,
   setActive,
   zOffset,
+  messages,
 }: Props) => {
   const map = useTexture(mapPath);
   const isActive = name === active;
@@ -54,12 +55,6 @@ export const PortalWorld = ({
   const { nodes } = useGLTF("/room-reverse.glb");
   const roomReverseTexture = useTexture("/baked-reverse.jpg");
   roomReverseTexture.flipY = false;
-
-  const { position, rotation, scale } = useControls({
-    position: [-1.2, 1.5, 9.8],
-    rotation: [0, Math.PI, 0],
-    scale: 13,
-  });
 
   useFrame((_state, delta) => {
     const worldOpen = isActive;
@@ -79,7 +74,9 @@ export const PortalWorld = ({
         onDoubleClick={() => setActive(name)}
         position={[-1.85, -4.4, zOffset]}
       >
-        <Message />
+        {messages.map((message, i) => (
+          <Message text={message} iteration={i} key={i} />
+        ))}
         <extrudeGeometry
           args={[
             createShape(3.7, 8.7, 0),
