@@ -55,9 +55,9 @@ export const PortalWorld = ({
   roomReverseTexture.flipY = false;
 
   const { position, rotation, scale } = useControls({
-    position: [-20, 3.2, 67.7],
-    rotation: [0, -0.35300000000000004, 0],
-    scale: 52,
+    position: [-1.2, 1.5, 9.8],
+    rotation: [0, Math.PI, 0],
+    scale: 13,
   });
 
   useFrame((_state, delta) => {
@@ -75,7 +75,7 @@ export const PortalWorld = ({
   return (
     <>
       <mesh
-        onDoubleClick={() => setActive(isActive ? null : name)}
+        onDoubleClick={() => setActive(name)}
         position={[-1.85, -4.4, zOffset]}
       >
         <extrudeGeometry
@@ -92,6 +92,7 @@ export const PortalWorld = ({
             geometry={openSphere.scene.children[0].geometry}
             scale={10}
             rotation={[Math.PI, 0, 0]}
+            onDoubleClick={(e) => e.stopPropagation()}
           >
             <meshStandardMaterial map={map} side={THREE.BackSide} />
           </mesh>
@@ -99,10 +100,26 @@ export const PortalWorld = ({
           {/* Room */}
           {isActive && (
             <>
-              <mesh position={position} rotation={rotation} scale={scale}>
+              {/* Transparent mesh (for doubleClicking) */}
+              <mesh
+                onClick={() => setActive(null)}
+                position={position}
+                rotation={rotation}
+                scale={scale}
+              >
+                <planeGeometry />
+                <meshPhongMaterial opacity={0} transparent />
+              </mesh>
+              {/* Backdrop */}
+              <mesh
+                position={[-20, 3.2, 67.7]}
+                rotation={[0, -0.35300000000000004, 0]}
+                scale={52}
+              >
                 <planeGeometry />
                 <meshBasicMaterial color="#323b4a" side={THREE.BackSide} />
               </mesh>
+
               <Float floatIntensity={0.5} rotationIntensity={0.5}>
                 <mesh
                   geometry={nodes.merged.geometry}
