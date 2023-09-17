@@ -14,19 +14,35 @@ type Props = {
 };
 
 export const Message = ({ text, iteration, isHovered }: Props) => {
-  const height = 1;
+  const groupRef = useRef(null);
+  const triangleRef = useRef(null);
+  const height = 1.3;
   const isOddIteration = useMemo(() => iteration % 2 === 0, [iteration]);
 
   const xOffset = { idle: 1.8, hovered: isOddIteration ? 4 : -0 };
-  const yOffset = iteration * (height - 0.2);
+  const yOffset = iteration * (height - 0.4);
   const zOffset = { idle: 0.5, hovered: 3 };
   const yRotation = { idle: 0, hovered: isOddIteration ? -0.7 : 0.7 };
 
-  const triangleXPosition = isOddIteration ? -1.5 : 1.5;
-  const groupRef = useRef(null);
+  const triangleXPosition = {
+    idle: isOddIteration ? -1.5 : 1.5,
+    hovered: isOddIteration ? -2.3 : 2.3,
+  };
+  const triangleYPosition = {
+    idle: -0.3,
+    hovered: 0,
+  };
 
   useFrame((_state, delta) => {
     if (isHovered) {
+      groupRef.current &&
+        easing.damp(
+          groupRef.current.position,
+          "x",
+          xOffset.hovered,
+          0.2,
+          delta
+        );
       groupRef.current &&
         easing.damp(
           groupRef.current.position,
@@ -43,21 +59,45 @@ export const Message = ({ text, iteration, isHovered }: Props) => {
           0.2,
           delta
         );
-      groupRef.current &&
+      triangleRef.current &&
         easing.damp(
-          groupRef.current.position,
+          triangleRef.current.position,
           "x",
-          xOffset.hovered,
+          triangleXPosition.hovered,
+          0.2,
+          delta
+        );
+      triangleRef.current &&
+        easing.damp(
+          triangleRef.current.position,
+          "y",
+          triangleYPosition.hovered,
           0.2,
           delta
         );
     } else {
       groupRef.current &&
+        easing.damp(groupRef.current.position, "x", xOffset.idle, 0.2, delta);
+      groupRef.current &&
         easing.damp(groupRef.current.position, "z", zOffset.idle, 0.2, delta);
       groupRef.current &&
         easing.damp(groupRef.current.rotation, "y", yRotation.idle, 0.2, delta);
-      groupRef.current &&
-        easing.damp(groupRef.current.position, "x", xOffset.idle, 0.2, delta);
+      triangleRef.current &&
+        easing.damp(
+          triangleRef.current.position,
+          "x",
+          triangleXPosition.idle,
+          0.2,
+          delta
+        );
+      triangleRef.current &&
+        easing.damp(
+          triangleRef.current.position,
+          "y",
+          triangleYPosition.idle,
+          0.2,
+          delta
+        );
     }
   });
 
@@ -79,10 +119,11 @@ export const Message = ({ text, iteration, isHovered }: Props) => {
 
       <mesh
         material={messageMaterial}
-        position={[triangleXPosition, -0.2, 0]}
+        position={[triangleXPosition.idle, triangleYPosition.idle, 0]}
         rotation={[0, 0, Math.PI * 0.23]}
+        ref={triangleRef}
       >
-        <boxGeometry args={[0.8, 0.8, messageDepth]} />
+        <boxGeometry args={[1, 1, messageDepth]} />
       </mesh>
     </group>
   );
