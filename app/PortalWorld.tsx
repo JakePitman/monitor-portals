@@ -16,7 +16,7 @@ import { Active } from "./Experience";
 type Props = {
   mapPath: string;
   name: NonNullable<Active>;
-  active: string | null;
+  active: Active;
   setActive: React.Dispatch<React.SetStateAction<Active>>;
   zOffset: number;
 };
@@ -53,7 +53,6 @@ export const PortalWorld = ({
   const { nodes } = useGLTF("/room-reverse.glb");
   const roomReverseTexture = useTexture("/baked-reverse.jpg");
   roomReverseTexture.flipY = false;
-  console.log(nodes);
 
   const { position, rotation, scale } = useControls({
     position: [-20, 3.2, 67.7],
@@ -103,20 +102,21 @@ export const PortalWorld = ({
             <meshBasicMaterial color="#323b4a" side={THREE.BackSide} />
           </mesh>
 
-          {/* TODO: Chair is visible from outside portal. Render on active status */}
-          <Float floatIntensity={0.5} rotationIntensity={0.5}>
-            <mesh
-              geometry={nodes.merged.geometry}
-              scale={2}
-              rotation={[-0.05, 2.96, 0.0]}
-              position={[-4.24, -3.3, 28.5]}
-            >
-              <meshStandardMaterial
-                map={roomReverseTexture}
-                toneMapped={false}
-              />
-            </mesh>
-          </Float>
+          {isActive && (
+            <Float floatIntensity={0.5} rotationIntensity={0.5}>
+              <mesh
+                geometry={nodes.merged.geometry}
+                scale={2}
+                rotation={[-0.05, 2.96, 0.0]}
+                position={[-4.24, -3.3, 28.5]}
+              >
+                <meshStandardMaterial
+                  map={roomReverseTexture}
+                  toneMapped={false}
+                />
+              </mesh>
+            </Float>
+          )}
         </MeshPortalMaterial>
       </mesh>
     </>
