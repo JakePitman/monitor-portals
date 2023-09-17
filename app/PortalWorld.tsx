@@ -97,25 +97,26 @@ export const PortalWorld = ({
           </mesh>
 
           {/* Room */}
-          <mesh position={position} rotation={rotation} scale={scale}>
-            <planeGeometry />
-            <meshBasicMaterial color="#323b4a" side={THREE.BackSide} />
-          </mesh>
-
           {isActive && (
-            <Float floatIntensity={0.5} rotationIntensity={0.5}>
-              <mesh
-                geometry={nodes.merged.geometry}
-                scale={2}
-                rotation={[-0.05, 2.96, 0.0]}
-                position={[-4.24, -3.3, 28.5]}
-              >
-                <meshStandardMaterial
-                  map={roomReverseTexture}
-                  toneMapped={false}
-                />
+            <>
+              <mesh position={position} rotation={rotation} scale={scale}>
+                <planeGeometry />
+                <meshBasicMaterial color="#323b4a" side={THREE.BackSide} />
               </mesh>
-            </Float>
+              <Float floatIntensity={0.5} rotationIntensity={0.5}>
+                <mesh
+                  geometry={nodes.merged.geometry}
+                  scale={2}
+                  rotation={[-0.05, 2.96, 0.0]}
+                  position={[-4.24, -3.3, 28.5]}
+                >
+                  <meshStandardMaterial
+                    map={roomReverseTexture}
+                    toneMapped={false}
+                  />
+                </mesh>
+              </Float>
+            </>
           )}
         </MeshPortalMaterial>
       </mesh>

@@ -51,7 +51,7 @@ export const Experience = () => {
 
   return (
     <>
-      <color args={["white"]} attach="background" />
+      <color args={["#323b4a"]} attach="background" />
       <CameraControls
         ref={controlsRef}
         {...(!!active ? activeControlProps : inactiveControlProps)}
