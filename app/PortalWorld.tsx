@@ -12,6 +12,7 @@ import { easing } from "maath";
 import { useControls } from "leva";
 
 import { Active } from "./Experience";
+import { Message } from "./Message";
 
 type Props = {
   mapPath: string;
@@ -78,6 +79,7 @@ export const PortalWorld = ({
         onDoubleClick={() => setActive(name)}
         position={[-1.85, -4.4, zOffset]}
       >
+        <Message />
         <extrudeGeometry
           args={[
             createShape(3.7, 8.7, 0),
@@ -103,9 +105,9 @@ export const PortalWorld = ({
               {/* Transparent mesh (for doubleClicking) */}
               <mesh
                 onClick={() => setActive(null)}
-                position={position}
-                rotation={rotation}
-                scale={scale}
+                position={[-1.2, 1.5, 9.8]}
+                rotation={[0, Math.PI, 0]}
+                scale={13}
               >
                 <planeGeometry />
                 <meshPhongMaterial opacity={0} transparent />
@@ -113,7 +115,7 @@ export const PortalWorld = ({
               {/* Backdrop */}
               <mesh
                 position={[-20, 3.2, 67.7]}
-                rotation={[0, -0.35300000000000004, 0]}
+                rotation={[0, -0.35, 0]}
                 scale={52}
               >
                 <planeGeometry />
