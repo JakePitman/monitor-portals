@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import {
   MeshPortalMaterial,
   PortalMaterialType,
@@ -9,16 +9,17 @@ import {
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { easing } from "maath";
-import { useControls } from "leva";
 
 import { Active } from "./Experience";
+import { Message } from "./Message";
 
 type Props = {
   mapPath: string;
   name: NonNullable<Active>;
-  active: string | null;
+  active: Active;
   setActive: React.Dispatch<React.SetStateAction<Active>>;
   zOffset: number;
+  messages: string[];
 };
 
 const eps = 0.00001;
@@ -45,7 +46,9 @@ export const PortalWorld = ({
   active,
   setActive,
   zOffset,
+  messages,
 }: Props) => {
+  const [isHovered, setIsHovered] = useState(false);
   const map = useTexture(mapPath);
   const isActive = name === active;
   const portalRef = useRef<PortalMaterialType>(null);
@@ -53,13 +56,6 @@ export const PortalWorld = ({
   const { nodes } = useGLTF("/room-reverse.glb");
   const roomReverseTexture = useTexture("/baked-reverse.jpg");
   roomReverseTexture.flipY = false;
-  console.log(nodes);
-
-  const { position, rotation, scale } = useControls({
-    position: [-20, 3.2, 67.7],
-    rotation: [0, -0.35300000000000004, 0],
-    scale: 52,
-  });
 
   useFrame((_state, delta) => {
     const worldOpen = isActive;
@@ -76,9 +72,14 @@ export const PortalWorld = ({
   return (
     <>
       <mesh
-        onDoubleClick={() => setActive(isActive ? null : name)}
+        onDoubleClick={() => setActive(name)}
         position={[-1.85, -4.4, zOffset]}
+        onPointerEnter={() => setIsHovered(true)}
+        onPointerLeave={() => setIsHovered(false)}
       >
+        {messages.map((message, i) => (
+          <Message text={message} iteration={i} key={i} isHovered={isHovered} />
+        ))}
         <extrudeGeometry
           args={[
             createShape(3.7, 8.7, 0),
@@ -93,30 +94,49 @@ export const PortalWorld = ({
             geometry={openSphere.scene.children[0].geometry}
             scale={10}
             rotation={[Math.PI, 0, 0]}
+            onDoubleClick={(e) => e.stopPropagation()}
           >
             <meshStandardMaterial map={map} side={THREE.BackSide} />
           </mesh>
 
           {/* Room */}
-          <mesh position={position} rotation={rotation} scale={scale}>
-            <planeGeometry />
-            <meshBasicMaterial color="#323b4a" side={THREE.BackSide} />
-          </mesh>
+          {isActive && (
+            <>
+              {/* Transparent mesh (for doubleClicking) */}
+              <mesh
+                onClick={() => setActive(null)}
+                position={[-1.2, 1.5, 9.8]}
+                rotation={[0, Math.PI, 0]}
+                scale={13}
+              >
+                <planeGeometry />
+                <meshPhongMaterial opacity={0} transparent />
+              </mesh>
+              {/* Backdrop */}
+              <mesh
+                position={[-20, 3.2, 67.7]}
+                rotation={[0, -0.35, 0]}
+                scale={52}
+              >
+                <planeGeometry />
+                <meshBasicMaterial color="#323b4a" side={THREE.BackSide} />
+              </mesh>
 
-          {/* TODO: Chair is visible from outside portal. Render on active status */}
-          <Float floatIntensity={0.5} rotationIntensity={0.5}>
-            <mesh
-              geometry={nodes.merged.geometry}
-              scale={2}
-              rotation={[-0.05, 2.96, 0.0]}
-              position={[-4.24, -3.3, 28.5]}
-            >
-              <meshStandardMaterial
-                map={roomReverseTexture}
-                toneMapped={false}
-              />
-            </mesh>
-          </Float>
+              <Float floatIntensity={0.5} rotationIntensity={0.5}>
+                <mesh
+                  geometry={nodes.merged.geometry}
+                  scale={2}
+                  rotation={[-0.05, 2.96, 0.0]}
+                  position={[-4.24, -3.3, 28.5]}
+                >
+                  <meshStandardMaterial
+                    map={roomReverseTexture}
+                    toneMapped={false}
+                  />
+                </mesh>
+              </Float>
+            </>
+          )}
         </MeshPortalMaterial>
       </mesh>
     </>
