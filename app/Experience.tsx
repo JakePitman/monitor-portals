@@ -84,6 +84,11 @@ export const Experience = () => {
             active={active}
             setActive={setActive}
             messages={["OMG wow", "That's amazing!!", "Send me a postcard!"]}
+            sparkleRGBs={{
+              red: { min: 0.1, max: 1 },
+              green: { min: 0.1, max: 1 },
+              blue: { min: 0.1, max: 0.5 },
+            }}
           />
         )}
       />
@@ -100,6 +105,11 @@ export const Experience = () => {
             active={active}
             setActive={setActive}
             messages={["So beautifullll", "Where is this??"]}
+            sparkleRGBs={{
+              red: { min: 0.7, max: 1 },
+              green: { min: 0.7, max: 1 },
+              blue: { min: 1, max: 1 },
+            }}
           />
         )}
       />
@@ -116,6 +126,11 @@ export const Experience = () => {
             active={active}
             setActive={setActive}
             messages={["Wish I was there", "Incredible"]}
+            sparkleRGBs={{
+              red: { min: 0, max: 0 },
+              green: { min: 0.3, max: 1 },
+              blue: { min: 0.3, max: 1 },
+            }}
           />
         )}
       />

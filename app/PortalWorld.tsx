@@ -21,6 +21,11 @@ type Props = {
   setActive: React.Dispatch<React.SetStateAction<Active>>;
   zOffset: number;
   messages: string[];
+  sparkleRGBs: {
+    red: { min: number; max: number };
+    green: { min: number; max: number };
+    blue: { min: number; max: number };
+  };
 };
 
 const eps = 0.00001;
@@ -46,14 +51,7 @@ const sparkleSizes = new Float32Array(sparklesCount);
 const maxSize = 5;
 const minSize = 3;
 for (let i = 0; i < sparklesCount; i++) {
-  sparkleSizes[i] = Math.random() * (maxSize - minSize + 1) + minSize;
-}
-const sparkleColors = new Float32Array(sparklesCount * 3);
-for (let i = 0; i < sparklesCount * 3; i++) {
-  const i3 = i * 3;
-  sparkleColors[i3 + 0] = Math.random(); // set r
-  sparkleColors[i3 + 1] = Math.random(); // set g
-  sparkleColors[i3 + 2] = Math.random(); // set b
+  sparkleSizes[i] = Math.random() * (maxSize - minSize) + minSize;
 }
 
 export const PortalWorld = ({
@@ -63,12 +61,22 @@ export const PortalWorld = ({
   setActive,
   zOffset,
   messages,
+  sparkleRGBs,
 }: Props) => {
   const [isHovered, setIsHovered] = useState(false);
   const map = useTexture(mapPath);
   const isActive = name === active;
   const portalRef = useRef<PortalMaterialType>(null);
   const openSphere = useGLTF("/open-sphere.glb");
+
+  const sparkleColors = new Float32Array(sparklesCount * 3);
+  const { red, green, blue } = sparkleRGBs;
+  for (let i = 0; i < sparklesCount * 3; i++) {
+    const i3 = i * 3;
+    sparkleColors[i3 + 0] = Math.random() * (red.max - red.min) + red.min; // set r
+    sparkleColors[i3 + 1] = Math.random() * (green.max - green.min) + green.min; // set g
+    sparkleColors[i3 + 2] = Math.random() * (blue.max - blue.min) + blue.min; // set b
+  }
 
   useFrame((_state, delta) => {
     const worldOpen = isActive;
