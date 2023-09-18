@@ -2,8 +2,8 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useThree } from "@react-three/fiber";
-import * as THREE from "three";
-import { CameraControls } from "@react-three/drei";
+import { Vector3, DirectionalLight, Color } from "three";
+import { CameraControls, Sparkles } from "@react-three/drei";
 
 import { PortalWorld } from "./PortalWorld";
 import { Phone } from "./Phone";
@@ -35,7 +35,7 @@ export const Experience = () => {
 
   useEffect(() => {
     if (active) {
-      const targetPosition = new THREE.Vector3();
+      const targetPosition = new Vector3();
       scene.getObjectByName(active)?.getWorldPosition(targetPosition);
       const { x, y, z } = targetPosition;
       const isCenterPhone = x < 2 && x > -2;
@@ -46,7 +46,7 @@ export const Experience = () => {
     }
   }, [active]);
 
-  const directionalLightRef = useRef<THREE.DirectionalLight>(null);
+  const directionalLightRef = useRef<DirectionalLight>(null);
 
   return (
     <>
