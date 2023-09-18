@@ -1,14 +1,9 @@
 import { Text, useGLTF, useTexture } from "@react-three/drei";
-import { useControls } from "leva";
 
 export const Room = () => {
   const { nodes } = useGLTF("/room.glb");
   const texture = useTexture("/baked.jpg");
   texture.flipY = false;
-
-  const { position } = useControls({
-    position: [-12.1, 19.5, 3],
-  });
 
   const chars = {
     click: "Click",
@@ -55,6 +50,35 @@ export const Room = () => {
         characters={chars.drag}
       >
         {chars.drag}
+      </Text>
+      <Text
+        font="/GochiHand-Regular.ttf"
+        position={[9.71, 12.56, 1.6]}
+        scale={1.2}
+        color={"black"}
+        characters={chars.live}
+      >
+        {chars.live}
+      </Text>
+      <Text
+        font="/GochiHand-Regular.ttf"
+        position={[10.98, 8.79, 1.6]}
+        rotation={[0, 0, 0.2]}
+        scale={1.2}
+        color={"black"}
+        characters={chars.a}
+      >
+        {chars.a}
+      </Text>
+      <Text
+        font="/GochiHand-Regular.ttf"
+        position={[12.71, 10.22, 1.6]}
+        rotation={[0, 0, -0.2]}
+        scale={1.1}
+        color={"black"}
+        characters={chars.little}
+      >
+        {chars.little}
       </Text>
     </group>
   );
