@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import {
   Sparkles,
   MeshPortalMaterial,
@@ -69,14 +69,17 @@ export const PortalWorld = ({
   const portalRef = useRef<PortalMaterialType>(null);
   const openSphere = useGLTF("/open-sphere.glb");
 
-  const sparkleColors = new Float32Array(sparklesCount * 3);
-  const { red, green, blue } = sparkleRGBs;
-  for (let i = 0; i < sparklesCount * 3; i++) {
-    const i3 = i * 3;
-    sparkleColors[i3 + 0] = Math.random() * (red.max - red.min) + red.min; // set r
-    sparkleColors[i3 + 1] = Math.random() * (green.max - green.min) + green.min; // set g
-    sparkleColors[i3 + 2] = Math.random() * (blue.max - blue.min) + blue.min; // set b
-  }
+  const sparkleColors = useMemo(() => {
+    const rgbArray = new Float32Array(sparklesCount * 3);
+    const { red, green, blue } = sparkleRGBs;
+    for (let i = 0; i < sparklesCount * 3; i++) {
+      const i3 = i * 3;
+      rgbArray[i3 + 0] = Math.random() * (red.max - red.min) + red.min; // set r
+      rgbArray[i3 + 1] = Math.random() * (green.max - green.min) + green.min; // set g
+      rgbArray[i3 + 2] = Math.random() * (blue.max - blue.min) + blue.min; // set b
+    }
+    return rgbArray;
+  }, []);
 
   useFrame((_state, delta) => {
     const worldOpen = isActive;
