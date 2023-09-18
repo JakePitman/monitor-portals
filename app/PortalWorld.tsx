@@ -121,7 +121,7 @@ export const PortalWorld = ({
               <mesh
                 position={[-20, 3.2, 67.7]}
                 rotation={[0, -0.35, 0]}
-                scale={52}
+                scale={70}
               >
                 <planeGeometry />
                 <meshBasicMaterial color="#323b4a" side={THREE.BackSide} />
@@ -132,7 +132,7 @@ export const PortalWorld = ({
                   geometry={nodes.merged.geometry}
                   scale={2}
                   rotation={[-0.05, 2.96, 0.0]}
-                  position={[-4.24, -3.3, 28.5]}
+                  position={[-4.24, -3.3, 27.9]}
                 >
                   <meshStandardMaterial
                     map={roomReverseTexture}
