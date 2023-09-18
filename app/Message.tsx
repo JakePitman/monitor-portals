@@ -95,7 +95,7 @@ export const Message = ({ text, iteration, isHovered }: Props) => {
           triangleRef.current.position,
           "y",
           triangleYPosition.idle,
-          0.2,
+          0.1,
           delta
         );
     }
