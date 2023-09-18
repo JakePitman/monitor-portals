@@ -12,6 +12,7 @@ export const Room = () => {
 
   const clickChars = "Click";
   const timesTwoChars = "x 2";
+  const dragChars = "drag \nscreen";
   return (
     <group position={[0, -5, -14]}>
       <mesh
@@ -40,6 +41,15 @@ export const Room = () => {
         characters={timesTwoChars}
       >
         {timesTwoChars}
+      </Text>
+      <Text
+        font="/GochiHand-Regular.ttf"
+        position={[-5.5, 8.16, 1.75]}
+        scale={0.8}
+        color={"black"}
+        characters={dragChars}
+      >
+        {dragChars}
       </Text>
     </group>
   );
