@@ -104,7 +104,7 @@ export const PortalWorld = ({
             <>
               {/* Transparent mesh (for doubleClicking) */}
               <mesh
-                onClick={() => setActive(null)}
+                onDoubleClick={() => setActive(null)}
                 position={[-1.2, 1.5, 9.8]}
                 rotation={[0, Math.PI, 0]}
                 scale={13}
