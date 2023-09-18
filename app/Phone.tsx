@@ -1,7 +1,6 @@
-import { easing } from "maath";
 import { useRef, useEffect } from "react";
 import { RoundedBox, Float } from "@react-three/drei";
-import { useThree, useFrame } from "@react-three/fiber";
+import { useThree } from "@react-three/fiber";
 import { Active } from "./Experience";
 
 type Props = {
