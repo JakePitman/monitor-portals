@@ -4,7 +4,10 @@ import { Text, RoundedBox } from "@react-three/drei";
 import { MeshStandardMaterial } from "three";
 import { easing } from "maath";
 
-const messageMaterial = new MeshStandardMaterial({ color: "white" });
+const messageMaterial = new MeshStandardMaterial({
+  color: "white",
+  toneMapped: false,
+});
 
 const messageDepth = 0.3;
 type Props = {

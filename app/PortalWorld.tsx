@@ -72,7 +72,12 @@ export const PortalWorld = ({
   return (
     <>
       <mesh
-        onDoubleClick={() => setActive(name)}
+        onDoubleClick={() => {
+          setActive(name);
+          setTimeout(() => {
+            setIsHovered(false);
+          }, 300);
+        }}
         position={[-1.85, -4.4, zOffset]}
         onPointerEnter={() => setIsHovered(true)}
         onPointerLeave={() => setIsHovered(false)}
