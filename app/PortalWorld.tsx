@@ -41,14 +41,21 @@ function createShape(width: number, height: number, radius0: number) {
   return shape;
 }
 
-const sparklesCount = 100;
+const sparklesCount = 500;
 const sparkleSizes = new Float32Array(sparklesCount);
 const maxSize = 5;
 const minSize = 3;
 for (let i = 0; i < sparklesCount; i++) {
   sparkleSizes[i] = Math.random() * (maxSize - minSize + 1) + minSize;
 }
-console.log(sparkleSizes);
+const sparkleColors = new Float32Array(sparklesCount * 3);
+for (let i = 0; i < sparklesCount * 3; i++) {
+  const i3 = i * 3;
+  sparkleColors[i3 + 0] = Math.random(); // set r
+  sparkleColors[i3 + 1] = Math.random(); // set g
+  sparkleColors[i3 + 2] = Math.random(); // set b
+}
+
 export const PortalWorld = ({
   mapPath,
   name,
@@ -117,7 +124,7 @@ export const PortalWorld = ({
             position={[0, 0, 0]}
             size={sparkleSizes}
             scale={15}
-            color={new Color("red")}
+            color={sparkleColors}
           />
         </MeshPortalMaterial>
       </mesh>
