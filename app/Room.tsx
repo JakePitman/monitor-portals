@@ -10,9 +10,14 @@ export const Room = () => {
     position: [-12.1, 19.5, 3],
   });
 
-  const clickChars = "Click";
-  const timesTwoChars = "x 2";
-  const dragChars = "drag \nscreen";
+  const chars = {
+    click: "Click",
+    timesTwo: "x 2",
+    drag: "drag\nscreen",
+    live: "Live",
+    a: "a",
+    little: "little",
+  };
   return (
     <group position={[0, -5, -14]}>
       <mesh
@@ -29,27 +34,27 @@ export const Room = () => {
         position={[-12.85, 20.49, 1.64]}
         scale={1}
         color={"black"}
-        characters={clickChars}
+        characters={chars.click}
       >
-        {clickChars}
+        {chars.click}
       </Text>
       <Text
         font="/GochiHand-Regular.ttf"
         position={[-10.86, 19.09, 1.58]}
         scale={1}
         color={"black"}
-        characters={timesTwoChars}
+        characters={chars.timesTwo}
       >
-        {timesTwoChars}
+        {chars.timesTwo}
       </Text>
       <Text
         font="/GochiHand-Regular.ttf"
         position={[-5.5, 8.16, 1.75]}
         scale={0.8}
         color={"black"}
-        characters={dragChars}
+        characters={chars.drag}
       >
-        {dragChars}
+        {chars.drag}
       </Text>
     </group>
   );
