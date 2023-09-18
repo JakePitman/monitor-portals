@@ -41,6 +41,14 @@ function createShape(width: number, height: number, radius0: number) {
   return shape;
 }
 
+const sparklesCount = 100;
+const sparkleSizes = new Float32Array(sparklesCount);
+const maxSize = 5;
+const minSize = 3;
+for (let i = 0; i < sparklesCount; i++) {
+  sparkleSizes[i] = Math.random() * (maxSize - minSize + 1) + minSize;
+}
+console.log(sparkleSizes);
 export const PortalWorld = ({
   mapPath,
   name,
@@ -105,9 +113,10 @@ export const PortalWorld = ({
           {/* Room */}
           {isActive && <RoomReverse setActive={setActive} />}
           <Sparkles
+            count={sparklesCount}
             position={[0, 0, 0]}
-            size={30}
-            scale={20}
+            size={sparkleSizes}
+            scale={15}
             color={new Color("red")}
           />
         </MeshPortalMaterial>
