@@ -7,7 +7,7 @@ import {
   useGLTF,
 } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { BackSide, Shape, Color } from "three";
+import { BackSide, Shape } from "three";
 import { easing } from "maath";
 
 import { Active } from "./Experience";
