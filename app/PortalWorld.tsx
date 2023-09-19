@@ -26,6 +26,10 @@ type Props = {
     green: { min: number; max: number };
     blue: { min: number; max: number };
   };
+  sparkleOffset: {
+    [key: string]: number;
+  };
+  sparkleTransitionSpeed: number;
 };
 
 const eps = 0.00001;
@@ -62,11 +66,14 @@ export const PortalWorld = ({
   zOffset,
   messages,
   sparkleRGBs,
+  sparkleOffset,
+  sparkleTransitionSpeed,
 }: Props) => {
   const [isHovered, setIsHovered] = useState(false);
   const map = useTexture(mapPath);
   const isActive = name === active;
   const portalRef = useRef<PortalMaterialType>(null);
+  const sparkleRef = useRef(null);
   const openSphere = useGLTF("/open-sphere.glb");
 
   const sparkleColors = useMemo(() => {
@@ -88,8 +95,29 @@ export const PortalWorld = ({
         portalRef.current &&
           easing.damp(portalRef.current, "blend", 1, 0, delta);
       }, 700);
+      Object.keys(sparkleOffset).forEach((key) => {
+        sparkleRef.current &&
+          easing.damp(
+            sparkleRef.current.position,
+            key,
+            0,
+            sparkleTransitionSpeed,
+            delta
+          );
+      });
     } else {
       portalRef.current && easing.damp(portalRef.current, "blend", 0, 0, delta);
+      Object.keys(sparkleOffset).forEach((key) => {
+        sparkleRef.current &&
+          easing.damp(
+            sparkleRef.current.position,
+            key,
+            // @ts-ignore
+            sparkleOffset[key as keyof typeof sparkleOffset],
+            sparkleTransitionSpeed,
+            delta
+          );
+      });
     }
   });
 
@@ -132,10 +160,15 @@ export const PortalWorld = ({
           {isActive && <RoomReverse setActive={setActive} />}
           <Sparkles
             count={sparklesCount}
-            position={[0, 0, 0]}
+            position={[
+              sparkleOffset.hasOwnProperty("x") ? sparkleOffset.x : 0,
+              sparkleOffset.hasOwnProperty("y") ? sparkleOffset.y : 0,
+              sparkleOffset.hasOwnProperty("z") ? sparkleOffset.z : 0,
+            ]}
             size={sparkleSizes}
             scale={15}
             color={sparkleColors}
+            ref={sparkleRef}
           />
         </MeshPortalMaterial>
       </mesh>

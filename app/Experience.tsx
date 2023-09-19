@@ -89,6 +89,8 @@ export const Experience = () => {
               green: { min: 0.1, max: 1 },
               blue: { min: 0.1, max: 0.5 },
             }}
+            sparkleOffset={{ z: 22 }}
+            sparkleTransitionSpeed={0.7}
           />
         )}
       />
@@ -110,6 +112,8 @@ export const Experience = () => {
               green: { min: 0.7, max: 1 },
               blue: { min: 1, max: 1 },
             }}
+            sparkleOffset={{ y: 20 }}
+            sparkleTransitionSpeed={4}
           />
         )}
       />
@@ -131,6 +135,8 @@ export const Experience = () => {
               green: { min: 0.3, max: 1 },
               blue: { min: 0.3, max: 1 },
             }}
+            sparkleOffset={{ y: -20 }}
+            sparkleTransitionSpeed={0.5}
           />
         )}
       />
