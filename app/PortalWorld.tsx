@@ -158,7 +158,7 @@ export const PortalWorld = ({
           </mesh>
 
           {/* Room */}
-          {isActive && <RoomReverse setActive={setActive} />}
+          <RoomReverse setActive={setActive} isActive={isActive} />
           <Sparkles
             count={sparklesCount}
             position={[

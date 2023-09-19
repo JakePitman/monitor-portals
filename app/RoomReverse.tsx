@@ -4,14 +4,15 @@ import { BackSide } from "three";
 import { Active } from "./Experience";
 type Props = {
   setActive: React.Dispatch<React.SetStateAction<Active>>;
+  isActive: boolean;
 };
 
-export const RoomReverse = ({ setActive }: Props) => {
+export const RoomReverse = ({ setActive, isActive }: Props) => {
   const { nodes } = useGLTF("/room-reverse.glb");
   const roomReverseTexture = useTexture("/baked-reverse.jpg");
   roomReverseTexture.flipY = false;
   return (
-    <>
+    <group position={[0, isActive ? 0 : 30, 0]}>
       {/* Transparent mesh (for doubleClicking) */}
       <mesh
         onDoubleClick={() => setActive(null)}
@@ -38,6 +39,6 @@ export const RoomReverse = ({ setActive }: Props) => {
           <meshStandardMaterial map={roomReverseTexture} toneMapped={false} />
         </mesh>
       </Float>
-    </>
+    </group>
   );
 };
