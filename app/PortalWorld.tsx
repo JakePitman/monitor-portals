@@ -106,7 +106,8 @@ export const PortalWorld = ({
           );
       });
     } else {
-      portalRef.current && easing.damp(portalRef.current, "blend", 0, 0, delta);
+      portalRef.current &&
+        easing.damp(portalRef.current, "blend", 0, 0.01, delta);
       Object.keys(sparkleOffset).forEach((key) => {
         sparkleRef.current &&
           easing.damp(
