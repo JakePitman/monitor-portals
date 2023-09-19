@@ -1,17 +1,18 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import {
+  Sparkles,
   MeshPortalMaterial,
   PortalMaterialType,
   useTexture,
   useGLTF,
-  Float,
 } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import * as THREE from "three";
+import { BackSide, Shape } from "three";
 import { easing } from "maath";
 
 import { Active } from "./Experience";
 import { Message } from "./Message";
+import { RoomReverse } from "./RoomReverse";
 
 type Props = {
   mapPath: string;
@@ -20,11 +21,20 @@ type Props = {
   setActive: React.Dispatch<React.SetStateAction<Active>>;
   zOffset: number;
   messages: string[];
+  sparkleRGBs: {
+    red: { min: number; max: number };
+    green: { min: number; max: number };
+    blue: { min: number; max: number };
+  };
+  sparkleOffset: {
+    [key: string]: number;
+  };
+  sparkleTransitionSpeed: number;
 };
 
 const eps = 0.00001;
 function createShape(width: number, height: number, radius0: number) {
-  const shape = new THREE.Shape();
+  const shape = new Shape();
   const radius = radius0 - eps;
   shape.absarc(eps, eps, eps, -Math.PI / 2, -Math.PI, true);
   shape.absarc(eps, height - radius * 2, eps, Math.PI, Math.PI / 2, true);
@@ -40,6 +50,14 @@ function createShape(width: number, height: number, radius0: number) {
   return shape;
 }
 
+const sparklesCount = 500;
+const sparkleSizes = new Float32Array(sparklesCount);
+const maxSize = 5;
+const minSize = 3;
+for (let i = 0; i < sparklesCount; i++) {
+  sparkleSizes[i] = Math.random() * (maxSize - minSize) + minSize;
+}
+
 export const PortalWorld = ({
   mapPath,
   name,
@@ -47,15 +65,28 @@ export const PortalWorld = ({
   setActive,
   zOffset,
   messages,
+  sparkleRGBs,
+  sparkleOffset,
+  sparkleTransitionSpeed,
 }: Props) => {
   const [isHovered, setIsHovered] = useState(false);
   const map = useTexture(mapPath);
   const isActive = name === active;
   const portalRef = useRef<PortalMaterialType>(null);
+  const sparkleRef = useRef(null);
   const openSphere = useGLTF("/open-sphere.glb");
-  const { nodes } = useGLTF("/room-reverse.glb");
-  const roomReverseTexture = useTexture("/baked-reverse.jpg");
-  roomReverseTexture.flipY = false;
+
+  const sparkleColors = useMemo(() => {
+    const rgbArray = new Float32Array(sparklesCount * 3);
+    const { red, green, blue } = sparkleRGBs;
+    for (let i = 0; i < sparklesCount * 3; i++) {
+      const i3 = i * 3;
+      rgbArray[i3 + 0] = Math.random() * (red.max - red.min) + red.min; // set r
+      rgbArray[i3 + 1] = Math.random() * (green.max - green.min) + green.min; // set g
+      rgbArray[i3 + 2] = Math.random() * (blue.max - blue.min) + blue.min; // set b
+    }
+    return rgbArray;
+  }, []);
 
   useFrame((_state, delta) => {
     const worldOpen = isActive;
@@ -64,8 +95,29 @@ export const PortalWorld = ({
         portalRef.current &&
           easing.damp(portalRef.current, "blend", 1, 0, delta);
       }, 700);
+      Object.keys(sparkleOffset).forEach((key) => {
+        sparkleRef.current &&
+          easing.damp(
+            sparkleRef.current.position,
+            key,
+            0,
+            sparkleTransitionSpeed,
+            delta
+          );
+      });
     } else {
       portalRef.current && easing.damp(portalRef.current, "blend", 0, 0, delta);
+      Object.keys(sparkleOffset).forEach((key) => {
+        sparkleRef.current &&
+          easing.damp(
+            sparkleRef.current.position,
+            key,
+            // @ts-ignore
+            sparkleOffset[key as keyof typeof sparkleOffset],
+            sparkleTransitionSpeed,
+            delta
+          );
+      });
     }
   });
 
@@ -101,47 +153,23 @@ export const PortalWorld = ({
             rotation={[Math.PI, 0, 0]}
             onDoubleClick={(e) => e.stopPropagation()}
           >
-            <meshStandardMaterial map={map} side={THREE.BackSide} />
+            <meshStandardMaterial map={map} side={BackSide} />
           </mesh>
 
           {/* Room */}
-          {isActive && (
-            <>
-              {/* Transparent mesh (for doubleClicking) */}
-              <mesh
-                onDoubleClick={() => setActive(null)}
-                position={[-1.2, 1.5, 9.8]}
-                rotation={[0, Math.PI, 0]}
-                scale={13}
-              >
-                <planeGeometry />
-                <meshPhongMaterial opacity={0} transparent />
-              </mesh>
-              {/* Backdrop */}
-              <mesh
-                position={[-20, 3.2, 67.7]}
-                rotation={[0, -0.35, 0]}
-                scale={70}
-              >
-                <planeGeometry />
-                <meshBasicMaterial color="#323b4a" side={THREE.BackSide} />
-              </mesh>
-
-              <Float floatIntensity={0.5} rotationIntensity={0.5}>
-                <mesh
-                  geometry={nodes.merged.geometry}
-                  scale={2}
-                  rotation={[-0.05, 2.96, 0.0]}
-                  position={[-4.24, -3.3, 27.9]}
-                >
-                  <meshStandardMaterial
-                    map={roomReverseTexture}
-                    toneMapped={false}
-                  />
-                </mesh>
-              </Float>
-            </>
-          )}
+          {isActive && <RoomReverse setActive={setActive} />}
+          <Sparkles
+            count={sparklesCount}
+            position={[
+              sparkleOffset.hasOwnProperty("x") ? sparkleOffset.x : 0,
+              sparkleOffset.hasOwnProperty("y") ? sparkleOffset.y : 0,
+              sparkleOffset.hasOwnProperty("z") ? sparkleOffset.z : 0,
+            ]}
+            size={sparkleSizes}
+            scale={15}
+            color={sparkleColors}
+            ref={sparkleRef}
+          />
         </MeshPortalMaterial>
       </mesh>
     </>

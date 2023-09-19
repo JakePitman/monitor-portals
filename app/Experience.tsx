@@ -2,8 +2,8 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useThree } from "@react-three/fiber";
-import * as THREE from "three";
-import { CameraControls } from "@react-three/drei";
+import { Vector3, DirectionalLight, Color } from "three";
+import { CameraControls, Sparkles } from "@react-three/drei";
 
 import { PortalWorld } from "./PortalWorld";
 import { Phone } from "./Phone";
@@ -35,7 +35,7 @@ export const Experience = () => {
 
   useEffect(() => {
     if (active) {
-      const targetPosition = new THREE.Vector3();
+      const targetPosition = new Vector3();
       scene.getObjectByName(active)?.getWorldPosition(targetPosition);
       const { x, y, z } = targetPosition;
       const isCenterPhone = x < 2 && x > -2;
@@ -46,7 +46,7 @@ export const Experience = () => {
     }
   }, [active]);
 
-  const directionalLightRef = useRef<THREE.DirectionalLight>(null);
+  const directionalLightRef = useRef<DirectionalLight>(null);
 
   return (
     <>
@@ -84,6 +84,13 @@ export const Experience = () => {
             active={active}
             setActive={setActive}
             messages={["OMG wow", "That's amazing!!", "Send me a postcard!"]}
+            sparkleRGBs={{
+              red: { min: 0.1, max: 1 },
+              green: { min: 0.1, max: 1 },
+              blue: { min: 0.1, max: 0.5 },
+            }}
+            sparkleOffset={{ z: 22 }}
+            sparkleTransitionSpeed={0.7}
           />
         )}
       />
@@ -100,6 +107,13 @@ export const Experience = () => {
             active={active}
             setActive={setActive}
             messages={["So beautifullll", "Where is this??"]}
+            sparkleRGBs={{
+              red: { min: 0.7, max: 1 },
+              green: { min: 0.7, max: 1 },
+              blue: { min: 1, max: 1 },
+            }}
+            sparkleOffset={{ y: 17.5 }}
+            sparkleTransitionSpeed={0.5}
           />
         )}
       />
@@ -116,6 +130,13 @@ export const Experience = () => {
             active={active}
             setActive={setActive}
             messages={["Wish I was there", "Incredible"]}
+            sparkleRGBs={{
+              red: { min: 0, max: 0 },
+              green: { min: 0.3, max: 1 },
+              blue: { min: 0.3, max: 1 },
+            }}
+            sparkleOffset={{ y: -15 }}
+            sparkleTransitionSpeed={0.5}
           />
         )}
       />
