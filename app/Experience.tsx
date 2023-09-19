@@ -42,7 +42,7 @@ export const Experience = () => {
       const xOffset = isCenterPhone ? 0 : x > 0 ? -1 : 1;
       controlsRef.current?.setLookAt(x + xOffset, y, z + 1, x, y, z, true);
     } else {
-      controlsRef.current?.setLookAt(0, -4, 10, 0, -1, 0, true);
+      controlsRef.current?.setLookAt(0, -3.5, 10, 0, -1, 0, true);
     }
   }, [active]);
 

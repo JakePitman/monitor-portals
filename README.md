@@ -2,7 +2,7 @@
 
 Made with R3F
 
-[Code sandbox](https://codesandbox.io/p/sandbox/github/JakePitman/monitor-portals)
+See it running on [Code Sandbox](https://codesandbox.io/p/sandbox/github/JakePitman/monitor-portals)
 
 ## Getting Started
 
