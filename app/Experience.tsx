@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useThree } from "@react-three/fiber";
 import { Vector3, DirectionalLight, Color } from "three";
-import { CameraControls, Sparkles } from "@react-three/drei";
+import { CameraControls } from "@react-three/drei";
 
 import { PortalWorld } from "./PortalWorld";
 import { Phone } from "./Phone";
