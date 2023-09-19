@@ -113,7 +113,7 @@ export const Experience = () => {
               blue: { min: 1, max: 1 },
             }}
             sparkleOffset={{ y: 20 }}
-            sparkleTransitionSpeed={4}
+            sparkleTransitionSpeed={0.3}
           />
         )}
       />
