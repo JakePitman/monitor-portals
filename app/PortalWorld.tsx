@@ -93,8 +93,8 @@ export const PortalWorld = ({
     if (worldOpen) {
       setTimeout(() => {
         portalRef.current &&
-          easing.damp(portalRef.current, "blend", 1, 0, delta);
-      }, 700);
+          easing.damp(portalRef.current, "blend", 1, 0.2, delta);
+      }, 600);
       Object.keys(sparkleOffset).forEach((key) => {
         sparkleRef.current &&
           easing.damp(
