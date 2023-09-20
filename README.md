@@ -1,5 +1,7 @@
 # Monitor Portals
 
+![demo](/demo.gif)
+
 Made with R3F
 
 See it running on [Code Sandbox](https://codesandbox.io/p/sandbox/github/JakePitman/monitor-portals)
